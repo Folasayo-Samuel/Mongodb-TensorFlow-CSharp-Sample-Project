@@ -73,10 +73,10 @@ class Program
         }
     }
 
-    public class SampleData
+     public class SampleData
     {
-        public List<double> X { get; set; }
-        public List<double> Y { get; set; }
+        public List<double> X { get; set; } = new List<double>();
+        public List<double> Y { get; set; } = new List<double>();
     }
 
     public class DataPoint
