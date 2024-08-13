@@ -15,7 +15,7 @@ class Program
         // MongoDB connection string
         var client = new MongoClient("mongodb://localhost:27017");
         var database = client.GetDatabase("linear-data");
-        var collection = database.GetCollection<BsonDocument>("sampleData");
+        var collection = database.GetCollection<SampleData>("sampleData");
 
         // Define the data to insert
         var sampleData = new SampleData
@@ -39,15 +39,15 @@ class Program
         // Fetch the data from MongoDB
         var fetchedDocument = collection.Find(new BsonDocument()).FirstOrDefault();
 
-        var X_array = fetchedDocument["X"].AsBsonArray.Select(value => (float)value.AsDouble).ToArray();
-        var Y_array = fetchedDocument["Y"].AsBsonArray.Select(value => (float)value.AsDouble).ToArray();
+        var xArray = fetchedDocument["X"].AsBsonArray.Select(value => (float)value.AsDouble).ToArray();
+        var yArray = fetchedDocument["Y"].AsBsonArray.Select(value => (float)value.AsDouble).ToArray();
 
         // Create a new ML context
         var mlContext = new MLContext();
 
         // Create the ML.NET data structures
-        var data = X_array.Zip(Y_array, (x, y) => new DataPoint { X = x, Y = y }).ToList();
-        var dataView = mlContext.Data.LoadFromEnumerable(data);
+        var data = xArray.Zip(yArray, (x, y) => new DataPoint { X = x, Y = y }).ToList();
+        var dataVieyA mlContext.Data.LoadFromEnumerable(data);
 
         // Define the trainer
         var pipeline = mlContext.Transforms.Concatenate("Features", new[] { "X" })
